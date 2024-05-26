@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 
 // export const dynamic = "force-dynamic";
 const API = "https://dai.tongdaihoidap.com";
+// const API = "http://localhost:8080";
 
 export async function GET(request) {
   const userID = cookies().get("userID").value;
@@ -48,19 +49,17 @@ export async function POST(request, form) {
 export async function PUT(request, form) {
   const userID = cookies().get("userID")?.value;
   const token = cookies().get("token")?.value;
-
+  console.log(form);
   const res = await fetch(`${API}/v1/api${request}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json",
       "x-xclient-id": userID,
       authorization: token,
     },
-    body: JSON.stringify(form),
+    body: form,
   });
 
   if (!res.ok) {
-    console.log(res);
     throw new Error("Failed to fetch data");
   }
 

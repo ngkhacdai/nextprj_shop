@@ -13,30 +13,68 @@ import Link from "next/link";
 import { IoIosLogOut, IoIosNotifications } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchShopInfor } from "@/redux/slice/ShopSlice";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { signout } from "@/api/Access";
+
 const { Header, Sider, Content } = Layout;
+
 const SidebarClient = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const [menuVisible, setMenuVisible] = useState(false);
   const shopInfor = useSelector((state) => state.shop.shopInFor);
   const dispatch = useDispatch();
+  const router = useRouter();
+
   useEffect(() => {
     dispatch(fetchShopInfor());
-  }, []);
+  }, [dispatch]);
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
   const pathname = usePathname();
+
   const logoutHandler = async () => {
     await signout();
   };
+
+  const handleMenuClick = (e) => {
+    setMenuVisible(false);
+    router.push(e.key);
+  };
+
+  const items = [
+    {
+      key: "/",
+      icon: <SiStatista />,
+      label: "Thống kê",
+    },
+    {
+      key: "/product",
+      icon: <VideoCameraOutlined />,
+      label: "Sản phẩm",
+    },
+    {
+      key: "/order",
+      icon: <UploadOutlined />,
+      label: "Đơn hàng",
+    },
+    {
+      key: "/infor",
+      icon: <UploadOutlined />,
+      label: "Thông tin shop",
+    },
+  ];
+
   return (
     <Layout>
       <Sider
-        className="h-screen sticky top-0"
+        className="h-screen sticky top-0 hidden md:block"
         trigger={null}
         collapsible
         collapsed={collapsed}
+        collapsedWidth={0}
       >
         <div className="demo-logo-vertical">
           <img alt="" src={logo.src} className="w-full h-40" />
@@ -45,28 +83,8 @@ const SidebarClient = ({ children }) => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={[pathname]}
-          items={[
-            {
-              key: "/",
-              icon: <SiStatista />,
-              label: <Link href={"/"}>Thống kê</Link>,
-            },
-            {
-              key: "/product",
-              icon: <VideoCameraOutlined />,
-              label: <Link href={"/product"}>Sản phẩm</Link>,
-            },
-            {
-              key: "/order",
-              icon: <UploadOutlined />,
-              label: <Link href={"/order"}>Đơn hàng</Link>,
-            },
-            {
-              key: "/infor",
-              icon: <UploadOutlined />,
-              label: <Link href={"/infor"}>Thông tin shop</Link>,
-            },
-          ]}
+          items={items}
+          onClick={handleMenuClick}
         />
       </Sider>
       <Layout>
@@ -75,9 +93,43 @@ const SidebarClient = ({ children }) => {
             padding: 0,
             background: colorBgContainer,
           }}
+          className="z-10"
         >
-          <Row className="items-center" justify={"space-between"}>
-            <Col span={12}>
+          <Row className="items-center md:hidden">
+            <Col>
+              <Button
+                type="text"
+                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                onClick={() => setCollapsed(!collapsed)}
+                style={{
+                  fontSize: "16px",
+                  width: 64,
+                  height: 64,
+                }}
+                className="hidden md:flex"
+              />
+            </Col>
+            <Col>
+              <Button
+                className="md:hidden"
+                type="text"
+                icon={
+                  menuVisible ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />
+                }
+                onClick={() => setMenuVisible(!menuVisible)}
+                style={{
+                  fontSize: "16px",
+                  width: 64,
+                  height: 64,
+                }}
+              />
+            </Col>
+          </Row>
+          <Row
+            className="items-center hidden md:flex"
+            justify={"space-between"}
+          >
+            <Col span={3}>
               <Button
                 type="text"
                 icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -90,11 +142,7 @@ const SidebarClient = ({ children }) => {
               />
             </Col>
             <Col span={12}>
-              <Row
-                className="items-center mr-2"
-                justify={"end"}
-                gutter={[0, 10]}
-              >
+              <Row className="items-center mr-2" justify={"end"}>
                 <Col>
                   <IoIosNotifications className="text-2xl" />
                 </Col>
@@ -113,6 +161,21 @@ const SidebarClient = ({ children }) => {
               </Row>
             </Col>
           </Row>
+          <div
+            className={`md:hidden transition-max-height duration-300 z-10 ease-in-out ${
+              menuVisible ? "max-h-screen" : "max-h-0 overflow-hidden"
+            }`}
+          >
+            <Menu
+              theme="dark"
+              mode="inline"
+              defaultSelectedKeys={[pathname]}
+              items={items}
+              style={{ width: "100%" }}
+              className="z-10"
+              onClick={handleMenuClick}
+            />
+          </div>
         </Header>
         <Content
           style={{
