@@ -46,7 +46,7 @@ export async function POST(request, form) {
   const data = await res.json();
   return data;
 }
-export async function PUT(request, form) {
+export async function PUT(request, form = {}) {
   const userID = cookies().get("userID")?.value;
   const token = cookies().get("token")?.value;
   const res = await fetch(`${API}/v1/api${request}`, {

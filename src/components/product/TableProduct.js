@@ -3,9 +3,11 @@ import { Button, Col, Row, Table, Tag } from "antd";
 import React from "react";
 import ModalAddProduct from "./ModalAddProduct";
 import { API } from "@/api/url";
+import { useRouter } from "next/navigation";
+import { publishById, unpublishById } from "@/api/Product";
 
 const TableProduct = ({ productData, categoryData }) => {
-  console.log(productData);
+  const router = useRouter();
   const columns = [
     {
       title: "Ảnh",
@@ -68,10 +70,33 @@ const TableProduct = ({ productData, categoryData }) => {
       title: "Hành động",
       key: "Hành động",
       render: (text, record, index) => {
-        return <Button>Xem chi tiết</Button>;
+        return (
+          <Row justify={"space-between"} gutter={[0, 0]}>
+            <Col span={10}>
+              <Button type="primary" onClick={() => productDetail(record._id)}>
+                Xem chi tiết
+              </Button>
+            </Col>
+            <Col span={10}>
+              <Button onClick={() => publishProduct(record)}>
+                {record.isPublished ? <p>Ẩn</p> : <p>Hiển thị</p>}
+              </Button>
+            </Col>
+          </Row>
+        );
       },
     },
   ];
+  const publishProduct = async (record) => {
+    if (!record.isPublished) {
+      await unpublishById(record._id);
+    } else {
+      await publishById(record._id);
+    }
+  };
+  const productDetail = (id) => {
+    router.push(`/productdetail?id=${id}`);
+  };
   return (
     <div>
       <Table
@@ -81,6 +106,7 @@ const TableProduct = ({ productData, categoryData }) => {
             : productData
         }
         columns={columns}
+        scroll={{ x: 1000 }}
       />
       <ModalAddProduct categoryData={categoryData} />
     </div>
