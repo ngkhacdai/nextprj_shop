@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchShopInfor = createAsyncThunk("shop/shopinfor", async () => {
   const response = await getShopInfor();
-  return response;
+  return response.message;
 });
 
 const initialState = {

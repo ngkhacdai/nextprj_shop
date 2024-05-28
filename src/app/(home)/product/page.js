@@ -1,7 +1,9 @@
+import Product from "@/components/product/Product";
+
 export default function Page() {
   return (
     <div>
-      <p>Product</p>
+      <Product productStatus={"all"} />
     </div>
   );
 }

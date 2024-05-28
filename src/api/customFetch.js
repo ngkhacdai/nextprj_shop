@@ -1,8 +1,9 @@
 "use server";
 import { cookies } from "next/headers";
+import { API } from "./url";
 
 // export const dynamic = "force-dynamic";
-const API = "https://dai.tongdaihoidap.com";
+// const API = "https://dai.tongdaihoidap.com";
 // const API = "http://localhost:8080";
 
 export async function GET(request) {
@@ -31,11 +32,10 @@ export async function POST(request, form) {
   const res = await fetch(`${API}/v1/api${request}`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       "x-xclient-id": userID,
       authorization: token,
     },
-    body: JSON.stringify(form),
+    body: form,
   });
 
   if (!res.ok) {
@@ -49,7 +49,6 @@ export async function POST(request, form) {
 export async function PUT(request, form) {
   const userID = cookies().get("userID")?.value;
   const token = cookies().get("token")?.value;
-  console.log(form);
   const res = await fetch(`${API}/v1/api${request}`, {
     method: "PUT",
     headers: {

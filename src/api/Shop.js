@@ -1,6 +1,5 @@
 "use server";
 
-import axios from "./customAxios";
 import { GET, PUT } from "./customFetch";
 
 export const getShopInfor = async () => {
@@ -12,5 +11,5 @@ export const getShopInfor = async () => {
 
 export const updateShop = async (formData) => {
   const response = await PUT(`/shop/updateShop`, formData);
-  return response;
+  return response.message;
 };
