@@ -1,10 +1,5 @@
 "use client";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { SiStatista } from "react-icons/si";
 import logo from "@/assets/trustybuy.png";
 import { Button, Col, Layout, Menu, Row, theme } from "antd";
@@ -15,6 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchShopInfor } from "@/redux/slice/ShopSlice";
 import { usePathname, useRouter } from "next/navigation";
 import { signout } from "@/api/Access";
+import { AiOutlineProduct } from "react-icons/ai";
+import { RiBillFill } from "react-icons/ri";
+import { CgProfile } from "react-icons/cg";
 
 const { Header, Sider, Content } = Layout;
 
@@ -52,17 +50,17 @@ const SidebarClient = ({ children }) => {
     },
     {
       key: "/product",
-      icon: <VideoCameraOutlined />,
+      icon: <AiOutlineProduct />,
       label: "Sản phẩm",
     },
     {
       key: "/order",
-      icon: <UploadOutlined />,
+      icon: <RiBillFill />,
       label: "Đơn hàng",
     },
     {
       key: "/infor",
-      icon: <UploadOutlined />,
+      icon: <CgProfile />,
       label: "Thông tin shop",
     },
   ];
