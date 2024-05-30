@@ -147,12 +147,6 @@ const SidebarClient = ({ children }) => {
                   <IoIosNotifications className="text-2xl" />
                 </Col>
                 <Col className="items-center flex">
-                  <img
-                    src={logo.src}
-                    alt=""
-                    className="w-14 mx-2 h-14 border-2 border-inherit rounded-full"
-                  />
-                  {shopInfor ? <p>shop name</p> : <p>Chưa có thông tin</p>}
                   <IoIosLogOut
                     onClick={() => logoutHandler()}
                     className="text-2xl mx-2 cursor-pointer text-red-500"

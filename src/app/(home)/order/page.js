@@ -1,7 +1,11 @@
-export default function Page() {
+import Order from "@/components/order/Order";
+
+export default function Page({ params, searchParams }) {
   return (
     <div>
-      <p>Order</p>
+      <p>
+        <Order status={searchParams.status} />
+      </p>
     </div>
   );
 }

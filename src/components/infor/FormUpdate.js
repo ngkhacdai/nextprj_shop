@@ -2,12 +2,31 @@
 import React from "react";
 import { updateShop } from "@/api/Shop";
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, Col, Form, Image, Input, Row, Upload } from "antd";
+import {
+  Button,
+  Col,
+  Form,
+  Image,
+  Input,
+  Row,
+  Upload,
+  notification,
+} from "antd";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchShopInfor } from "@/redux/slice/ShopSlice";
 const FormUpdate = ({ shopInfor }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
+  const dispatch = useDispatch();
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type) => {
+    api["success"]({
+      message: "Notification Title",
+      description: "Cập nhật thành công",
+    });
+  };
   const getBase64 = (file) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -30,7 +49,6 @@ const FormUpdate = ({ shopInfor }) => {
     </div>
   );
   const onFinish = async (values) => {
-    console.log(fileList[0].originFileObj);
     const formData = new FormData();
     formData.append("nameShop", values.nameShop);
     formData.append("address", values.address);
@@ -38,10 +56,23 @@ const FormUpdate = ({ shopInfor }) => {
     formData.append("des", values.des);
     formData.append("avatar", fileList[0].originFileObj);
     await updateShop(formData);
+    await dispatch(fetchShopInfor());
+    openNotificationWithIcon();
   };
   return (
     <div>
-      <Form style={{ width: "100%" }} layout="vertical" onFinish={onFinish}>
+      {contextHolder}
+      <Form
+        style={{ width: "100%" }}
+        initialValues={{
+          nameShop: shopInfor.nameShop,
+          address: shopInfor.address,
+          phoneNumberShop: shopInfor.phoneNumberShop,
+          des: shopInfor.des,
+        }}
+        layout="vertical"
+        onFinish={onFinish}
+      >
         <Row gutter={[10, 10]}>
           <Col xs={24} sm={24} md={5} xl={5} className="flex items-center">
             <Form.Item
@@ -115,7 +146,7 @@ const FormUpdate = ({ shopInfor }) => {
                 { required: true, message: "Vui lòng điền mô tả" },
               ]}
             >
-              <Input placeholder="Hãy điền mô tả cho cửa hàng" />
+              <Input.TextArea placeholder="Hãy điền mô tả cho cửa hàng" />
             </Form.Item>
             <Button type="primary" htmlType="submit">
               Lưu

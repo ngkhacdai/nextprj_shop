@@ -2,88 +2,89 @@
 import { cookies } from "next/headers";
 import { API } from "./url";
 
-// export const dynamic = "force-dynamic";
-// const API = "https://dai.tongdaihoidap.com";
-// const API = "http://localhost:8080";
+// Trừu tượng hóa hàm fetch
+async function customFetch(
+  request,
+  { method = "GET", headers = {}, body } = {}
+) {
+  const userID = cookies().get("userID")?.value;
+  const token = cookies().get("token")?.value;
 
+  const defaultHeaders = {
+    "x-xclient-id": userID,
+    authorization: token,
+    ...headers,
+  };
+
+  const res = await fetch(`${API}/v1/api${request}`, {
+    method: method,
+    headers: defaultHeaders,
+    body: body
+      ? typeof body === "string"
+        ? body
+        : JSON.stringify(body)
+      : null,
+  });
+
+  if (!res.ok) {
+    console.error("Fetch error:", res);
+    throw new Error("Failed to fetch data");
+  }
+
+  const contentType = res.headers.get("Content-Type");
+  if (contentType && contentType.includes("application/json")) {
+    return await res.json();
+  } else {
+    return await res.text(); // or other suitable method to handle different response types
+  }
+}
+
+// Hàm GET
 export async function GET(request) {
-  const userID = cookies().get("userID").value;
-  const token = cookies().get("token").value;
-  const res = await fetch(`${API}/v1/api${request}`, {
-    headers: {
-      "Content-Type": "application/json",
-      "x-xclient-id": userID,
-      authorization: token,
-    },
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  const data = await res.json();
-  return data;
+  return customFetch(request, { method: "GET" });
 }
 
+// Hàm POST
 export async function POST(request, form) {
-  const userID = cookies().get("userID")?.value;
-  const token = cookies().get("token")?.value;
-
-  const res = await fetch(`${API}/v1/api${request}`, {
+  return customFetch(request, {
     method: "POST",
-    headers: {
-      "x-xclient-id": userID,
-      authorization: token,
-    },
     body: form,
+    headers: {
+      "Content-Type":
+        typeof form === "string" ? "text/plain" : "application/json",
+    },
   });
-
-  if (!res.ok) {
-    console.log(res);
-    throw new Error("Failed to fetch data");
-  }
-
-  const data = await res.json();
-  return data;
 }
+
+// Hàm PUT
 export async function PUT(request, form = {}) {
-  const userID = cookies().get("userID")?.value;
-  const token = cookies().get("token")?.value;
-  const res = await fetch(`${API}/v1/api${request}`, {
+  return customFetch(request, {
     method: "PUT",
-    headers: {
-      "x-xclient-id": userID,
-      authorization: token,
-    },
     body: form,
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  const data = await res.json();
-  return data;
-}
-export async function DELETE(request, form) {
-  const userID = cookies().get("userID")?.value;
-  const token = cookies().get("token")?.value;
-
-  const res = await fetch(`${API}/v1/api${request}`, {
-    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      "x-xclient-id": userID,
-      authorization: token,
     },
-    body: JSON.stringify(form),
   });
+}
 
-  if (!res.ok) {
-    console.log(res);
-    throw new Error("Failed to fetch data");
-  }
+// Hàm PATCH
+export async function PATCH(request, form = {}) {
+  return customFetch(request, {
+    method: "PATCH",
+    body: form,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
 
-  const data = await res.json();
-  return data;
+// Hàm DELETE
+export async function DELETE(request, form) {
+  return customFetch(request, {
+    method: "DELETE",
+    body: form,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 }

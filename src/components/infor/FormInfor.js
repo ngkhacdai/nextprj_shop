@@ -17,7 +17,7 @@ const FormInfor = () => {
           setShowUpdate(!showUpdate);
         }}
       >
-        Sửa thông tin shop
+        <p className="break-words">Sửa thông tin shop</p>
       </Button>
       {showUpdate ? (
         <FormUpdate shopInfor={shopInfor} />

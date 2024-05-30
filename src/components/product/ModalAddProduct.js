@@ -362,7 +362,7 @@ const ModalAddProduct = ({ categoryData }) => {
               <Col span={7}>
                 {attribute[index].options[0].size &&
                   attribute[index].options.map((item, optionIndex) => (
-                    <div className="pb-2" key={`option-${optionIndex}`}>
+                    <div className="pb-2" key={`optionquan-${optionIndex}`}>
                       <Input
                         onChange={(e) =>
                           onChangeQuantity(e.target.value, index, optionIndex)

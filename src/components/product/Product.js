@@ -6,7 +6,7 @@ const Product = async ({ productStatus }) => {
   const productData = await getALlProductByStatus(productStatus);
   const categoryData = await getAllCategory();
   return (
-    <div>
+    <div className="py-1">
       <TableProduct categoryData={categoryData} productData={productData} />
     </div>
   );

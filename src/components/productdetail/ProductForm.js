@@ -182,7 +182,15 @@ const ProductForm = ({ categoryData, productDetail }) => {
     };
     setAttribute(newAtt);
   };
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
+    let response = await fetch(
+      "https://dai.tongdaihoidap.com/uploads/1700837254924-Screenshot 2023-11-24 214347.png"
+    );
+    let data = await response.blob();
+    let metadata = {
+      type: "image/jpeg",
+    };
+    let file = new File([data], `${Date.now()}.png`, metadata);
     console.log("Success:", values);
   };
   const onFinishFailed = (errorInfo) => {
@@ -334,7 +342,7 @@ const ProductForm = ({ categoryData, productDetail }) => {
                 <Col span={7}>
                   {attribute[index].options[0].size &&
                     attribute[index].options.map((item, optionIndex) => (
-                      <div className="pb-2" key={`option-${optionIndex}`}>
+                      <div className="pb-2" key={`optionquan-${optionIndex}`}>
                         <Input
                           onChange={(e) =>
                             onChangeQuantity(e.target.value, index, optionIndex)
@@ -349,7 +357,9 @@ const ProductForm = ({ categoryData, productDetail }) => {
             );
           })}
         </Form.Item>
-        <Button>Lưu</Button>
+        <Button type="primary" htmlType="submit">
+          Lưu
+        </Button>
       </Form>
     </div>
   );
