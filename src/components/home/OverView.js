@@ -18,6 +18,9 @@ import {
 } from "recharts";
 
 const OverView = ({ overViewData, analysisData }) => {
+  if (!overViewData || !analysisData) {
+    return "Hãy cập nhật thông tin cá nhân trước";
+  }
   return (
     <div>
       <Row gutter={[10, 10]}>
@@ -26,7 +29,9 @@ const OverView = ({ overViewData, analysisData }) => {
             <p className="flex justify-center">
               <FaMoneyBillWave />
             </p>
-            <h1 className="text-3xl font-bold">{overViewData.totalCheckout}</h1>
+            <h1 className="text-3xl font-bold">
+              {overViewData?.totalCheckout}
+            </h1>
             <p className="text-slate-400 text-lg">Doanh thu</p>
           </Card>
         </Col>
@@ -35,7 +40,7 @@ const OverView = ({ overViewData, analysisData }) => {
             <p className="flex justify-center">
               <SlUserFollow />
             </p>
-            <h1 className="text-3xl font-bold">{overViewData.totalFollow}</h1>
+            <h1 className="text-3xl font-bold">{overViewData?.totalFollow}</h1>
             <p className="text-slate-400 text-lg">Theo dõi</p>
           </Card>
         </Col>
@@ -44,7 +49,7 @@ const OverView = ({ overViewData, analysisData }) => {
             <p className="flex justify-center">
               <RiBillFill />
             </p>
-            <h1 className="text-3xl font-bold">{overViewData.totalOrders}</h1>
+            <h1 className="text-3xl font-bold">{overViewData?.totalOrders}</h1>
             <p className="text-slate-400 text-lg">Đơn hàng</p>
           </Card>
         </Col>
@@ -53,7 +58,7 @@ const OverView = ({ overViewData, analysisData }) => {
             <p className="flex justify-center">
               <MdOutlineProductionQuantityLimits />
             </p>
-            <h1 className="text-3xl font-bold">{overViewData.totalProduct}</h1>
+            <h1 className="text-3xl font-bold">{overViewData?.totalProduct}</h1>
             <p className="text-slate-400 text-lg">Tổng sản phẩm</p>
           </Card>
         </Col>
@@ -78,7 +83,7 @@ const OverView = ({ overViewData, analysisData }) => {
           <Bar dataKey="totalRevenue" fill="#8884d8" barSize={30} />
         </BarChart>
       </ResponsiveContainer>
-      <Table dataSource={overViewData.topSold} />
+      <Table dataSource={overViewData?.topSold} />
     </div>
   );
 };

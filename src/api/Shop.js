@@ -15,10 +15,14 @@ export const updateShop = async (formData) => {
 };
 
 export const getoverview = async (year) => {
-  const response = await GET(`/shop/overview/${year}`);
-  return response.message;
+  try {
+    const response = await GET(`/shop/overview/${year}`);
+    return response.message;
+  } catch (error) {}
 };
 export const getanalysis = async (year) => {
-  const response = await GET(`/shop/analysis/${year}`);
-  return response.message.revenue;
+  try {
+    const response = await GET(`/shop/analysis/${year}`);
+    return response.message.revenue;
+  } catch (error) {}
 };

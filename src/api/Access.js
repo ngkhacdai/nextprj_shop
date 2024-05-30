@@ -11,7 +11,7 @@ export const login = async (form) => {
   });
 };
 export const register = async (form) => {
-  await POST(`access/login`, form);
+  await POST(`/access/signup`, form);
 };
 export const verifyOtp = async (form) => {
   await POST(`/access/verifyOtp`, form).then((res) => {

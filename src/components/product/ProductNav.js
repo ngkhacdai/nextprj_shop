@@ -3,6 +3,7 @@ import { Menu } from "antd";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const ProductNav = ({ children }) => {
   const items = [
@@ -42,10 +43,23 @@ const ProductNav = ({ children }) => {
   //   },
   // ];
   const pathName = usePathname();
+  const shopInFor = useSelector((state) => state.shop.shopInFor);
+
   return (
     <div>
-      <Menu mode="horizontal" defaultSelectedKeys={pathName} items={items} />
-      {children}
+      {!shopInFor ||
+        (shopInFor.length == 0 ? (
+          <p>Hãy cập nhật thông tin shop trước</p>
+        ) : (
+          <div>
+            <Menu
+              mode="horizontal"
+              defaultSelectedKeys={pathName}
+              items={items}
+            />
+            {children}
+          </div>
+        ))}
     </div>
   );
 };
