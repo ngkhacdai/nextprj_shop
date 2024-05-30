@@ -1,5 +1,5 @@
 "use client";
-import { Card, Col, Row, Table, Tooltip } from "antd";
+import { Card, Col, Row, Table, Tag, Tooltip } from "antd";
 import React from "react";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { SlUserFollow } from "react-icons/sl";
@@ -9,18 +9,70 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
   ResponsiveContainer,
   XAxis,
   YAxis,
 } from "recharts";
+import { API } from "@/api/url";
 
 const OverView = ({ overViewData, analysisData }) => {
   if (!overViewData || !analysisData) {
     return "Hãy cập nhật thông tin cá nhân trước";
   }
+  const columns = [
+    {
+      title: "Ảnh",
+      render: (record) => {
+        return (
+          <img
+            alt=""
+            className="w-16 h-16"
+            src={`${API}/uploads/${record.product_thumb[0]}`}
+          />
+        );
+      },
+    },
+    {
+      title: "Tên sản phẩm",
+      dataIndex: "product_name",
+    },
+    {
+      title: "Giá",
+      render: (record) => {
+        return (
+          <p>
+            {record.product_price.toLocaleString("en-US", {
+              style: "currency",
+              currency: "VND",
+            })}
+          </p>
+        );
+      },
+    },
+    {
+      title: "Tồn kho",
+      dataIndex: "product_quantity",
+    },
+    {
+      title: "Số lượng đã bán",
+      dataIndex: "product_sold",
+    },
+    {
+      title: "Trạng thái",
+      render: (text, record, index) => {
+        return (
+          <div>
+            {record.isPublished ? (
+              <Tag color="#87d068">Hiển thị</Tag>
+            ) : (
+              <Tag color="#f50">Bị ẩn</Tag>
+            )}
+          </div>
+        );
+      },
+    },
+  ];
+  console.log(overViewData);
   return (
     <div>
       <Row gutter={[10, 10]}>
@@ -30,7 +82,10 @@ const OverView = ({ overViewData, analysisData }) => {
               <FaMoneyBillWave />
             </p>
             <h1 className="text-3xl font-bold">
-              {overViewData?.totalCheckout}
+              {(overViewData?.totalCheckout).toLocaleString("en-US", {
+                style: "currency",
+                currency: "VND",
+              })}
             </h1>
             <p className="text-slate-400 text-lg">Doanh thu</p>
           </Card>
@@ -68,22 +123,11 @@ const OverView = ({ overViewData, analysisData }) => {
           <XAxis dataKey="month" />
           <YAxis />
           <Tooltip wrapperStyle={{ width: 100, backgroundColor: "#ccc" }} />
-          {/* <Legend
-            width={100}
-            wrapperStyle={{
-              top: 40,
-              right: 20,
-              backgroundColor: "#f5f5f5",
-              border: "1px solid #d5d5d5",
-              borderRadius: 3,
-              lineHeight: "40px",
-            }}
-          /> */}
           <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
           <Bar dataKey="totalRevenue" fill="#8884d8" barSize={30} />
         </BarChart>
       </ResponsiveContainer>
-      <Table dataSource={overViewData?.topSold} />
+      <Table dataSource={overViewData?.topSold} columns={columns} />
     </div>
   );
 };
