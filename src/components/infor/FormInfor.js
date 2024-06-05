@@ -6,13 +6,13 @@ import FormUpdate from "./FormUpdate";
 import InformationShop from "./InformationShop";
 import { useSelector } from "react-redux";
 
-const FormInfor = () => {
+const FormInfor = ({ shopInfor }) => {
   const [showUpdate, setShowUpdate] = useState(false);
-  const shopInfor = useSelector((state) => state.shop.shopInFor);
-  console.log(shopInfor);
+
   return (
     <div>
       <Button
+        className="mb-2"
         onClick={() => {
           setShowUpdate(!showUpdate);
         }}

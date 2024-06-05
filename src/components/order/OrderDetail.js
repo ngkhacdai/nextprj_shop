@@ -3,8 +3,6 @@ import { Col, Row } from "antd";
 import React from "react";
 
 const OrderDetail = ({ detail }) => {
-  console.log(detail);
-
   return (
     <div>
       <div className="text-center">

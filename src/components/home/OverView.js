@@ -118,6 +118,7 @@ const OverView = ({ overViewData, analysisData }) => {
           </Card>
         </Col>
       </Row>
+      <p className="py-2 text-xl">Doanh thu theo tháng</p>
       <ResponsiveContainer className="mt-2" width="100%" height={400}>
         <BarChart data={analysisData}>
           <XAxis dataKey="month" />
@@ -127,7 +128,12 @@ const OverView = ({ overViewData, analysisData }) => {
           <Bar dataKey="totalRevenue" fill="#8884d8" barSize={30} />
         </BarChart>
       </ResponsiveContainer>
-      <Table dataSource={overViewData?.topSold} columns={columns} />
+      <p className="py-2 text-xl">Top sản phẩm bán chạy</p>
+      <Table
+        dataSource={overViewData?.topSold}
+        columns={columns}
+        scroll={{ x: 600 }}
+      />
     </div>
   );
 };

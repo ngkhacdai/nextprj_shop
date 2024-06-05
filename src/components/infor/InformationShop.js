@@ -4,7 +4,7 @@ import React from "react";
 
 const InformationShop = ({ shopInfor }) => {
   return (
-    <div className="mt-4 p-4 bg-white rounded-lg shadow-md">
+    <div className="">
       <Row gutter={[20, 20]} justify="space-between">
         <Col
           xs={24}
@@ -23,22 +23,22 @@ const InformationShop = ({ shopInfor }) => {
         <Col xs={24} sm={24} md={24} lg={12} xl={12}>
           <Row className="py-2" justify="start" gutter={[10, 0]}>
             <Col span={24}>
-              <p className="text-lg font-serif text-gray-600">Tên shop:</p>
+              <p className="text-lg font-mono text-gray-600">Tên shop:</p>
             </Col>
             <Col span={24}>
-              <p className="font-extrabold text-3xl text-gray-900 break-words">
+              <p className="font-semibold text-3xl text-gray-900 break-words">
                 {shopInfor.nameShop}
               </p>
             </Col>
           </Row>
           <Row className="py-2" gutter={[10, 0]}>
             <Col span={24}>
-              <p className="text-lg font-serif text-gray-600 break-words">
+              <p className="text-lg font-mono text-gray-600 break-words">
                 Số điện thoại:
               </p>
             </Col>
             <Col
-              className="font-bold text-2xl text-gray-900 break-words"
+              className="font-semibold text-2xl text-gray-900 break-words"
               span={24}
             >
               <p>0{shopInfor.phoneNumberShop}</p>
@@ -46,12 +46,12 @@ const InformationShop = ({ shopInfor }) => {
           </Row>
           <Row className="py-2" gutter={[10, 0]}>
             <Col span={24}>
-              <p className="text-lg font-serif text-gray-600 break-words">
+              <p className="text-lg font-mono text-gray-600 break-words">
                 Địa chỉ:
               </p>
             </Col>
             <Col
-              className="font-bold text-2xl text-gray-900 break-words"
+              className="font-semibold text-2xl text-gray-900 break-words"
               span={24}
             >
               <p>{shopInfor.address}</p>
@@ -59,15 +59,15 @@ const InformationShop = ({ shopInfor }) => {
           </Row>
           <Row className="py-2" gutter={[10, 0]}>
             <Col span={24}>
-              <p className="text-lg font-serif text-gray-600 break-words">
+              <p className="text-lg font-mono text-gray-600 break-words">
                 Mô tả về shop:
               </p>
             </Col>
             <Col
-              className="font-bold text-xl text-gray-900 break-words"
+              className="font-semibold text-xl text-gray-900 break-words"
               span={24}
             >
-              <p>{shopInfor.des}</p>
+              <p className="whitespace-pre-wrap">{shopInfor.des}</p>
             </Col>
           </Row>
         </Col>

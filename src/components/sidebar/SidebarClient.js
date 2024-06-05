@@ -68,7 +68,7 @@ const SidebarClient = ({ children }) => {
   return (
     <Layout>
       <Sider
-        className="h-screen sticky top-0 hidden md:block"
+        className="h-screen sticky top-0  hidden xs:block bg-white"
         trigger={null}
         collapsible
         collapsed={collapsed}
@@ -78,7 +78,6 @@ const SidebarClient = ({ children }) => {
           <img alt="" src={logo.src} className="w-full h-40" />
         </div>
         <Menu
-          theme="dark"
           mode="inline"
           defaultSelectedKeys={[pathname]}
           items={items}
@@ -91,25 +90,11 @@ const SidebarClient = ({ children }) => {
             padding: 0,
             background: colorBgContainer,
           }}
-          className="z-10"
+          className="z-10 sticky top-0"
         >
-          <Row className="items-center md:hidden">
+          <Row justify={"space-between"} className="items-center xs:hidden">
             <Col>
               <Button
-                type="text"
-                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                onClick={() => setCollapsed(!collapsed)}
-                style={{
-                  fontSize: "16px",
-                  width: 64,
-                  height: 64,
-                }}
-                className="hidden md:flex"
-              />
-            </Col>
-            <Col>
-              <Button
-                className="md:hidden"
                 type="text"
                 icon={
                   menuVisible ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />
@@ -122,9 +107,22 @@ const SidebarClient = ({ children }) => {
                 }}
               />
             </Col>
+            <Col span={12}>
+              <Row className="items-center mr-2" justify={"end"}>
+                <Col>
+                  <IoIosNotifications className="text-2xl" />
+                </Col>
+                <Col className="items-center flex">
+                  <IoIosLogOut
+                    onClick={() => logoutHandler()}
+                    className="text-2xl mx-2 cursor-pointer text-red-500"
+                  />
+                </Col>
+              </Row>
+            </Col>
           </Row>
           <Row
-            className="items-center hidden md:flex"
+            className="items-center hidden xs:flex"
             justify={"space-between"}
           >
             <Col span={3}>
@@ -159,7 +157,6 @@ const SidebarClient = ({ children }) => {
             }`}
           >
             <Menu
-              theme="dark"
               mode="inline"
               defaultSelectedKeys={[pathname]}
               items={items}

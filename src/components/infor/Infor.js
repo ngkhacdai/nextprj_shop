@@ -1,10 +1,12 @@
 import React from "react";
 import FormInfor from "./FormInfor";
+import { getShopInfor } from "@/api/Shop";
 
-const Infor = () => {
+const Infor = async () => {
+  const shopInfor = await getShopInfor();
   return (
     <div>
-      <FormInfor />
+      <FormInfor shopInfor={shopInfor} />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 "use client";
 import { API } from "@/api/url";
-import { Button, Modal, Table } from "antd";
+import { Button, Modal, Table, notification } from "antd";
 import React, { useState } from "react";
 import OrderDetail from "./OrderDetail";
 import { changeStatus } from "@/api/Order";
@@ -10,6 +10,13 @@ const TableOrder = ({ orderData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [detail, setDetail] = useState([]);
   const getPathName = usePathname();
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = () => {
+    api["success"]({
+      message: "Thông báo",
+      description: "Thay đổi trạng thái thành công",
+    });
+  };
   const handleOk = async () => {
     let status = "";
     if (detail.order_status === "pending") {
@@ -22,6 +29,7 @@ const TableOrder = ({ orderData }) => {
       status,
     };
     await changeStatus(form, getPathName);
+    openNotificationWithIcon();
     setIsModalOpen(false);
   };
   const canceledOrder = async () => {
@@ -30,6 +38,7 @@ const TableOrder = ({ orderData }) => {
       status: "cancelled",
     };
     await changeStatus(form, getPathName);
+    openNotificationWithIcon();
     setIsModalOpen(false);
   };
   const handleCancel = () => {
@@ -101,6 +110,7 @@ const TableOrder = ({ orderData }) => {
   };
   return (
     <div className="py-1">
+      {contextHolder}
       <Table columns={columns} dataSource={orderData} scroll={{ x: 1000 }} />
       <Modal
         cancelText={"Đóng"}
