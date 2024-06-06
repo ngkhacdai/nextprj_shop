@@ -3,7 +3,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { API } from "@/helper/url";
+import { URL } from "@/api/url";
 
 const UpdateProfile = () => {
   const [file, setFile] = useState([]);
@@ -27,7 +27,7 @@ const UpdateProfile = () => {
       formData.append("phoneNumber", phoneNumber);
       await axios
         .post(
-          `${API}/v1/api/user/setUpAcc/${localStorage.getItem("userID")}`,
+          `${URL}/v1/api/user/setUpAcc/${localStorage.getItem("userID")}`,
           formData
         )
         .then((res) => {

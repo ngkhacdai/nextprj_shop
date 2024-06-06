@@ -13,7 +13,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { API } from "@/api/url";
+import { URL } from "@/api/url";
 
 const OverView = ({ overViewData, analysisData }) => {
   if (!overViewData || !analysisData) {
@@ -27,7 +27,7 @@ const OverView = ({ overViewData, analysisData }) => {
           <img
             alt=""
             className="w-16 h-16"
-            src={`${API}/uploads/${record.product_thumb[0]}`}
+            src={`${URL}/uploads/${record.product_thumb[0]}`}
           />
         );
       },

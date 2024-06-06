@@ -16,6 +16,69 @@ module.exports = {
     screens: {
       xs: "576px",
     },
+    animation: {
+      changeFormRegister: "changeFormRegister 1s forwards",
+      changeFormLogin: "changeFormLogin 1s forwards",
+      changeFormRegister1: "changeFormRegister1 1s forwards",
+      changeFormLogin1: "changeFormLogin1 1s forwards",
+    },
+    keyframes: {
+      changeFormRegister: {
+        "0%": {
+          transform: "translateX(0)",
+          opacity: 1,
+        },
+        "50%": {
+          transform: "translateX(-100px) ",
+          opacity: 0,
+        },
+        "100%": {
+          transform: "scale(0)",
+          opacity: 0,
+        },
+      },
+      changeFormLogin: {
+        "0%": {
+          transform: "translateX(100px)",
+          opacity: 0,
+        },
+        "50%": {
+          transform: "translateX(0) ",
+          opacity: 1,
+        },
+        "100%": {
+          opacity: 1,
+        },
+      },
+      changeFormRegister1: {
+        "0%": {
+          transform: "translateX(0)",
+          opacity: 1,
+        },
+        "50%": {
+          transform: "translateX(100px) ",
+
+          opacity: 0,
+        },
+        "100%": {
+          transform: "scale(0)",
+          opacity: 0,
+        },
+      },
+      changeFormLogin1: {
+        "0%": {
+          transform: "translateX(-100px)",
+          opacity: 0,
+        },
+        "50%": {
+          transform: "translateX(0) ",
+          opacity: 1,
+        },
+        "100%": {
+          opacity: 1,
+        },
+      },
+    },
   },
   plugins: [],
   important: true,

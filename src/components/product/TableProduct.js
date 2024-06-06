@@ -2,7 +2,7 @@
 import { Button, Col, Row, Table, Tag } from "antd";
 import React from "react";
 import ModalAddProduct from "./ModalAddProduct";
-import { API } from "@/api/url";
+import { URL } from "@/api/url";
 import { useRouter } from "next/navigation";
 import { publishById, unpublishById } from "@/api/Product";
 
@@ -17,7 +17,7 @@ const TableProduct = ({ productData, categoryData }) => {
           <img
             alt=""
             className="w-28 h-28"
-            src={`${API}/uploads/${record.product_thumb[0]}`}
+            src={`${URL}/uploads/${record.product_thumb[0]}`}
           />
         );
       },

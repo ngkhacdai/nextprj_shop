@@ -9,7 +9,7 @@ const Otp = ({ isRegister, setIsRegister }) => {
   const [api, contextHolder] = notification.useNotification();
   const router = useRouter();
 
-  const [count, setCount] = useState(60);
+  const [count, setCount] = useState(50000);
   const openNotificationWithIcon = (content) => {
     api["error"]({
       message: "Notification Error",
@@ -44,11 +44,12 @@ const Otp = ({ isRegister, setIsRegister }) => {
     setIsRegister();
   }
   return (
-    <div>
+    <div className="flex items-center justify-center h-4/5">
       {contextHolder}
-      <Title level={5}>With formatter (Upcase)</Title>
-      <Input.OTP formatter={(str) => str.toUpperCase()} {...sharedProps} />
-      <p className="mt-3">Bạn có {count} giây để nhập mã OTP</p>
+      <div className="text-center">
+        <Input.OTP formatter={(str) => str.toUpperCase()} {...sharedProps} />
+        <p className="mt-3">Bạn có {count} giây để nhập mã OTP</p>
+      </div>
     </div>
   );
 };

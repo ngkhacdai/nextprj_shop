@@ -2,6 +2,8 @@
 import { login } from "@/api/Access";
 import { Button, Form, Input, notification } from "antd";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 const LoginForm = () => {
   const [api, contextHolder] = notification.useNotification();
   const router = useRouter();
@@ -11,6 +13,7 @@ const LoginForm = () => {
       description: content,
     });
   };
+
   const onFinish = async (values) => {
     const form = {
       email: values.email,
@@ -25,62 +28,57 @@ const LoginForm = () => {
         openNotificationWithIcon("Sai tài khoản hoặc mật khẩu");
       });
   };
+
   const onFinishFailed = (errorInfo) => {};
+
   return (
-    <div>
-      <p className="mb-5 text-2xl font-bold">Đăng nhập</p>
+    <div className="">
       {contextHolder}
-      <Form
-        name="basic"
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 8,
-        }}
-        className="w-full"
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
-      >
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
 
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[
-            {
-              required: true,
-              min: 6,
-              message: "Password must be at least 6 characters",
-            },
-          ]}
+      <div className="w-full max-w-md">
+        <p className="mb-2 text-2xl font-bold">Đăng nhập</p>
+        <Form
+          name="basic"
+          className="w-full"
+          layout="vertical"
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
         >
-          <Input.Password />
-        </Form.Item>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your username!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
 
-        <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 8,
-          }}
-        >
-          <Button type="primary" htmlType="submit">
-            Đăng nhập
-          </Button>
-        </Form.Item>
-      </Form>
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                min: 6,
+                message: "Password must be at least 6 characters",
+              },
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Đăng nhập
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
     </div>
   );
 };

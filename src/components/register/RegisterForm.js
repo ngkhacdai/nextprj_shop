@@ -4,6 +4,7 @@ import { Button, Form, Input, notification } from "antd";
 
 const RegisterForm = ({ setIsRegister }) => {
   const [api, contextHolder] = notification.useNotification();
+
   const onFinish = async (values) => {
     const sliceEmail = values.email.split("@");
     const match = /^[a-zA-Z0-9._%+-]+$/;
@@ -16,7 +17,7 @@ const RegisterForm = ({ setIsRegister }) => {
         "Email phải có định dạng như sau (nguyenvana@gmail.com)"
       );
     }
-    if (values.password != values.comPassword) {
+    if (values.password !== values.comPassword) {
       return openNotificationWithIcon("Mật khẩu phải giống nhập lại mật khẩu");
     }
     const form = {
@@ -28,33 +29,32 @@ const RegisterForm = ({ setIsRegister }) => {
       .then(() => {
         setIsRegister(values);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         return openNotificationWithIcon("Email đã tồn tại!");
       });
   };
+
   const openNotificationWithIcon = (content) => {
-    api["error"]({
+    api.error({
       message: "Notification Error",
       description: content,
     });
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
   return (
-    <div>
-      <p className="mb-5 text-2xl font-bold">Đăng ký</p>
+    <div className="w-full ">
       {contextHolder}
+      <p className="mb-5 text-2xl font-bold">Đăng ký</p>
       <Form
         name="basic"
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 8,
-        }}
-        className="w-full text-center"
+        className="w-full"
         onFinish={onFinish}
+        layout="vertical"
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
@@ -85,7 +85,7 @@ const RegisterForm = ({ setIsRegister }) => {
           <Input.Password />
         </Form.Item>
         <Form.Item
-          label="Comfirm Password"
+          label="Confirm Password"
           name="comPassword"
           rules={[
             {
@@ -98,12 +98,7 @@ const RegisterForm = ({ setIsRegister }) => {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 8,
-          }}
-        >
+        <Form.Item>
           <Button type="primary" htmlType="submit">
             Đăng ký
           </Button>

@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { DELETE, POST } from "./customFetch";
 import { redirect } from "next/navigation";
+import { API } from "./url";
 export const login = async (form) => {
   const oneMonth = 24 * 60 * 60 * 1000 * 30;
   await POST(`/access/login`, form).then((response) => {
@@ -11,7 +12,12 @@ export const login = async (form) => {
   });
 };
 export const register = async (form) => {
-  await POST(`/access/signup`, form);
+  try {
+    const response = await POST(`/access/signup`, form);
+    return response;
+  } catch (error) {
+    throw new Error("Could not register");
+  }
 };
 export const verifyOtp = async (form) => {
   await POST(`/access/verifyOtp`, form).then((res) => {

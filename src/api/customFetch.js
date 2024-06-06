@@ -3,6 +3,11 @@ import { cookies } from "next/headers";
 import { API } from "./url";
 
 // Trừu tượng hóa hàm fetch
+export const getCookie = () => {
+  const userID = cookies().get("userID")?.value;
+  const token = cookies().get("token")?.value;
+  return { userID, token };
+};
 async function customFetch(
   request,
   { method = "GET", headers = {}, body } = {}
@@ -16,7 +21,7 @@ async function customFetch(
     ...headers,
   };
 
-  const res = await fetch(`${API}/v1/api${request}`, {
+  const res = await fetch(`${API}${request}`, {
     method: method,
     headers: defaultHeaders,
     body: body

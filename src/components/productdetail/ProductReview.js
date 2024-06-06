@@ -1,5 +1,5 @@
 "use client";
-import { API } from "@/api/url";
+import { URL } from "@/api/url";
 import { Avatar, List, Radio, Rate } from "antd";
 import React from "react";
 
@@ -24,7 +24,7 @@ const ProductReview = ({ productDetail }) => {
             <List.Item>
               <List.Item.Meta
                 avatar={
-                  <Avatar src={`${API}/${item.user.information.avatar}`} />
+                  <Avatar src={`${URL}/${item.user.information.avatar}`} />
                 }
                 title={
                   <div className="flex items-center">

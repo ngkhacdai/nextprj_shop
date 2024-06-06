@@ -1,4 +1,4 @@
-import { API } from "@/api/url";
+import { URL } from "@/api/url";
 import { Col, Row } from "antd";
 import React from "react";
 
@@ -16,7 +16,7 @@ const OrderDetail = ({ detail }) => {
             <img
               alt=""
               className="w-full h-56"
-              src={`${API}/uploads/${detail.product_thumb[0]}`}
+              src={`${URL}/uploads/${detail.product_thumb[0]}`}
             />
           </Col>
           <Col className="py-2">

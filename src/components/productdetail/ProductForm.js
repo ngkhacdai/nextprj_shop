@@ -1,5 +1,5 @@
 "use client";
-import { API } from "@/api/url";
+import { URL } from "@/api/url";
 import { CheckOutlined, CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   Input,
@@ -23,7 +23,7 @@ const ProductForm = ({ categoryData, productDetail }) => {
       uid: `${index}`,
       name: item, // Extract the file name
       status: "done",
-      url: `${API}/uploads/${item}`,
+      url: `${URL}/uploads/${item}`,
     }))
   );
   const [category, setCategory] = useState(productDetail.category);

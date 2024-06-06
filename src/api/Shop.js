@@ -9,14 +9,14 @@ export const getShopInfor = async () => {
   const response = await GET("/shop/getShopForShop").catch(() => {
     return null;
   });
-  return response.message;
+  return response?.message;
 };
 
 export const updateShop = async (formData) => {
   // const response = await PUT(`/shop/updateShop`, formData);
   const userID = cookies().get("userID")?.value;
   const token = cookies().get("token")?.value;
-  const response = fetch(`${API}/v1/api/shop/updateShop`, {
+  const response = fetch(`${API}/shop/updateShop`, {
     method: "PUT",
     headers: {
       "x-xclient-id": userID,

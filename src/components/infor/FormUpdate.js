@@ -15,19 +15,23 @@ import {
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchShopInfor } from "@/redux/slice/ShopSlice";
-import { API } from "@/api/url";
+import { URL } from "@/api/url";
 const FormUpdate = ({ shopInfor }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const dispatch = useDispatch();
   const [previewImage, setPreviewImage] = useState("");
-  const [fileList, setFileList] = useState([
-    {
-      uid: `1`,
-      name: "image",
-      status: "done",
-      url: `${API}/${shopInfor.avatarShop}`,
-    },
-  ]);
+  const [fileList, setFileList] = useState(
+    !shopInfor
+      ? []
+      : [
+          {
+            uid: `1`,
+            name: "image",
+            status: "done",
+            url: `${URL}/${shopInfor.avatarShop}`,
+          },
+        ]
+  );
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type) => {
     api["success"]({
@@ -57,15 +61,15 @@ const FormUpdate = ({ shopInfor }) => {
     </div>
   );
   const onFinish = async (values) => {
-    // console.log(fileList[0].originFileObj);
     const formData = new FormData();
     formData.append("nameShop", values.nameShop);
     formData.append("address", values.address);
     formData.append("phoneNumberShop", values.phoneNumberShop);
     formData.append("des", values.des);
     formData.append("avatar", fileList[0].originFileObj);
-    window.location.reload();
     await updateShop(formData);
+    dispatch(fetchShopInfor());
+    window.location.reload();
     openNotificationWithIcon();
   };
   return (
@@ -74,10 +78,10 @@ const FormUpdate = ({ shopInfor }) => {
       <Form
         style={{ width: "100%" }}
         initialValues={{
-          nameShop: shopInfor.nameShop,
-          address: shopInfor.address,
-          phoneNumberShop: "0" + shopInfor.phoneNumberShop,
-          des: shopInfor.des,
+          nameShop: shopInfor?.nameShop,
+          address: shopInfor?.address,
+          phoneNumberShop: shopInfor && "0" + shopInfor.phoneNumberShop,
+          des: shopInfor?.des,
         }}
         layout="vertical"
         onFinish={onFinish}

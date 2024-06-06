@@ -7,7 +7,7 @@ import { useState } from "react";
 const Register = () => {
   const [isRegister, setIsRegister] = useState();
   return (
-    <div className="text-center mt-52">
+    <div className=" w-full">
       {isRegister ? (
         <Otp
           isRegister={isRegister}
@@ -16,7 +16,7 @@ const Register = () => {
       ) : (
         <div>
           <RegisterForm setIsRegister={(values) => setIsRegister(values)} />
-          <FooterRegister />
+          {/* <FooterRegister /> */}
         </div>
       )}
     </div>

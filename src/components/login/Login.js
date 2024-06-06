@@ -3,8 +3,8 @@ import LoginForm from "./LoginForm";
 
 const Login = () => {
   return (
-    <div className="w-full m-auto text-center mt-52">
-      <LoginForm />
+    <div className="w-screen h-screen text-center flex flex-col justify-center items-center bg-blue-200">
+      {/* <LoginForm /> */}
       <FooterLogin />
     </div>
   );
