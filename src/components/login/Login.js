@@ -1,10 +1,9 @@
 import FooterLogin from "./FooterLogin";
-import LoginForm from "./LoginForm";
 
 const Login = () => {
   return (
-    <div className="w-screen h-screen text-center flex flex-col justify-center items-center bg-blue-200">
-      {/* <LoginForm /> */}
+    <div className="w-screen h-screen text-center flex flex-col justify-center items-center bg-gray-100">
+      <div className="flex flex-col items-center mb-6"></div>
       <FooterLogin />
     </div>
   );

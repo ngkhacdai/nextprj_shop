@@ -1,3 +1,5 @@
+const { transform } = require("next/dist/build/swc");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -21,8 +23,18 @@ module.exports = {
       changeFormLogin: "changeFormLogin 1s forwards",
       changeFormRegister1: "changeFormRegister1 1s forwards",
       changeFormLogin1: "changeFormLogin1 1s forwards",
+      popUp: "popUp 2s forwards",
     },
     keyframes: {
+      popUp: {
+        "0%": {
+          opacity: 0,
+        },
+        "100%": {
+          opacity: 1,
+          transform: "scale(100%)",
+        },
+      },
       changeFormRegister: {
         "0%": {
           transform: "translateX(0)",

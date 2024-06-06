@@ -3,6 +3,7 @@ import { login } from "@/api/Access";
 import { Button, Form, Input, notification } from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import logo from "@/assets/trustybuy.png";
 
 const LoginForm = () => {
   const [api, contextHolder] = notification.useNotification();
@@ -35,7 +36,9 @@ const LoginForm = () => {
     <div className="">
       {contextHolder}
 
-      <div className="w-full max-w-md">
+      <div className="w-full flex flex-col items-center justify-center max-w-md">
+        <img src={logo.src} alt="Logo" className="w-24 h-24" />
+
         <p className="mb-2 text-2xl font-bold">Đăng nhập</p>
         <Form
           name="basic"

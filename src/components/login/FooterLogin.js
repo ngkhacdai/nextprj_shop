@@ -1,9 +1,7 @@
 "use client";
 import { Button, Radio } from "antd";
-import Link from "next/link";
 import { useState } from "react";
 import LoginForm from "./LoginForm";
-import RegisterForm from "../register/RegisterForm";
 import Register from "../register/Register";
 
 const FooterLogin = () => {
@@ -16,27 +14,40 @@ const FooterLogin = () => {
       setAnimation(true);
     }
   };
+
   return (
     <div className="w-5/6 h-4/5 border-inherit rounded-lg bg-white shadow-lg border-2 p-2">
       <Radio.Group
-        className="xs:hidden block"
+        className="xs:hidden block mb-4"
         onChange={changeForm}
-        defaultValue="login"
+        defaultValue={animation ? "register" : "login"}
       >
         <Radio.Button value="login">Đăng nhập</Radio.Button>
         <Radio.Button value="register">Đăng ký</Radio.Button>
       </Radio.Group>
       <div className="h-full w-full flex justify-center">
-        <div className="w-full h-full flex flex-col items-center justify-center relative">
+        <div
+          className={`w-full h-full flex flex-col xs:border-inherit xs:border-r-2 items-center justify-center relative ${
+            animation ? " xs:flex hidden bg-white " : ""
+          }`}
+        >
           <div
             className={`absolute top-1/2 hidden transition ${
-              !animation ? "xs:hidden" : "xs:block"
+              !animation ? "xs:hidden" : "xs:block animate-popUp"
             }`}
           >
-            <span>Bạn đã có tài khoản!</span>
-            <Button onClick={() => setAnimation(false)}>Đăng nhập</Button>
+            <div className="flex flex-col justify-center items-center">
+              <span className="text-2xl font-bold text-gray-800">
+                Bạn đã có tài khoản!
+              </span>
+              <Button
+                className="bg-green-500 hover:bg-green-600 text-white mt-4"
+                onClick={() => setAnimation(false)}
+              >
+                Đăng nhập
+              </Button>
+            </div>
           </div>
-
           <div
             className={`xs:w-1/2 w-full ${
               animation
@@ -47,20 +58,33 @@ const FooterLogin = () => {
             <LoginForm />
           </div>
         </div>
-        <div className="w-full h-full flex flex-col items-center justify-center relative">
+        <div
+          className={`w-full h-full flex flex-col xs:border-inherit xs:border-l-2 items-center justify-center relative ${
+            !animation ? " xs:flex hidden bg-white" : ""
+          }`}
+        >
           <div
             className={`hidden absolute top-1/2 ${
-              animation ? "xs:hidden" : "xs:block"
+              animation ? "xs:hidden" : "xs:block animate-popUp"
             }`}
           >
-            <span>Bạn chưa có tài khoản?</span>
-            <Button onClick={() => setAnimation(true)}>Đăng ký</Button>
+            <div className="flex flex-col justify-center items-center">
+              <span className="text-2xl font-bold text-gray-800">
+                Bạn chưa có tài khoản?
+              </span>
+              <Button
+                className="bg-green-500 hover:bg-green-600 text-white w-20 mt-4"
+                onClick={() => setAnimation(true)}
+              >
+                Đăng ký
+              </Button>
+            </div>
           </div>
           <div
             className={`xs:w-1/2 w-full ${
               !animation
                 ? "animate-changeFormRegister1 xs:block hidden"
-                : "animate-changeFormLogin "
+                : "animate-changeFormLogin"
             }`}
           >
             <Register />
