@@ -1,13 +1,22 @@
-import { getanalysis, getoverview } from "@/api/Shop";
+import { getShopInfor, getanalysis, getoverview } from "@/api/Shop";
 import OverView from "./OverView";
 
 const Home = async () => {
-  const thisYear = new Date().getFullYear();
-  const overViewData = await getoverview(thisYear);
-  const analysisData = await getanalysis(thisYear);
+  const profile = await getShopInfor();
+  let overViewData = [];
+  let analysisData = [];
+  if (profile) {
+    const thisYear = new Date().getFullYear();
+    overViewData = await getoverview(thisYear);
+    analysisData = await getanalysis(thisYear);
+  }
   return (
     <div>
-      <OverView analysisData={analysisData} overViewData={overViewData} />
+      <OverView
+        profile={profile}
+        analysisData={analysisData}
+        overViewData={overViewData}
+      />
     </div>
   );
 };

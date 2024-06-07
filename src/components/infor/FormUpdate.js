@@ -13,13 +13,12 @@ import {
   notification,
 } from "antd";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchShopInfor } from "@/redux/slice/ShopSlice";
 import { URL } from "@/api/url";
+import { useRouter } from "next/navigation";
 const FormUpdate = ({ shopInfor }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
-  const dispatch = useDispatch();
   const [previewImage, setPreviewImage] = useState("");
+  const router = useRouter();
   const [fileList, setFileList] = useState(
     !shopInfor
       ? []
@@ -67,10 +66,11 @@ const FormUpdate = ({ shopInfor }) => {
     formData.append("phoneNumberShop", values.phoneNumberShop);
     formData.append("des", values.des);
     formData.append("avatar", fileList[0].originFileObj);
-    await updateShop(formData);
-    dispatch(fetchShopInfor());
-    window.location.reload();
-    openNotificationWithIcon();
+    await updateShop(formData).then(() => {
+      window.location.reload();
+    });
+    // router.push("/");
+    // openNotificationWithIcon();
   };
   return (
     <div>

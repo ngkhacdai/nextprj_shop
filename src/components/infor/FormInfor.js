@@ -4,7 +4,6 @@ import { Button } from "antd";
 import { useState } from "react";
 import FormUpdate from "./FormUpdate";
 import InformationShop from "./InformationShop";
-import { useSelector } from "react-redux";
 
 const FormInfor = ({ shopInfor }) => {
   const [showUpdate, setShowUpdate] = useState(false);

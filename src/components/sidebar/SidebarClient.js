@@ -3,11 +3,8 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { SiStatista } from "react-icons/si";
 import logo from "@/assets/trustybuy.png";
 import { Button, Col, Layout, Menu, Row, theme } from "antd";
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useState } from "react";
 import { IoIosLogOut, IoIosNotifications } from "react-icons/io";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchShopInfor } from "@/redux/slice/ShopSlice";
 import { usePathname, useRouter } from "next/navigation";
 import { signout } from "@/api/Access";
 import { AiOutlineProduct } from "react-icons/ai";
@@ -19,13 +16,7 @@ const { Header, Sider, Content } = Layout;
 const SidebarClient = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
-  const shopInfor = useSelector((state) => state.shop.shopInFor);
-  const dispatch = useDispatch();
   const router = useRouter();
-
-  useEffect(() => {
-    dispatch(fetchShopInfor());
-  }, [dispatch]);
 
   const {
     token: { colorBgContainer, borderRadiusLG },

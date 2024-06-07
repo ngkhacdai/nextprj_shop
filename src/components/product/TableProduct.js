@@ -1,12 +1,14 @@
 "use client";
-import { Button, Col, Row, Table, Tag } from "antd";
+import { Button, Col, Dropdown, Row, Table, Tag } from "antd";
 import React from "react";
-import ModalAddProduct from "./ModalAddProduct";
 import { URL } from "@/api/url";
 import { useRouter } from "next/navigation";
 import { publishById, unpublishById } from "@/api/Product";
+import { FaStar } from "react-icons/fa";
+import { BiShow, BiSolidDetail, BiSolidHide } from "react-icons/bi";
 
 const TableProduct = ({ productData, categoryData }) => {
+  console.log(productData);
   const router = useRouter();
   const columns = [
     {
@@ -47,6 +49,19 @@ const TableProduct = ({ productData, categoryData }) => {
       dataIndex: "product_sold",
     },
     {
+      title: "Đánh giá",
+      key: "rate",
+      dataIndex: "",
+      render: (record) => {
+        return (
+          <div className="flex items-center">
+            <p className="mr-2">{record.product_ratingAverage}</p>{" "}
+            <FaStar className="text-yellow-400" />
+          </div>
+        );
+      },
+    },
+    {
       title: "Tồn kho",
       key: "Tồn kho",
       dataIndex: "product_quantity",
@@ -71,16 +86,50 @@ const TableProduct = ({ productData, categoryData }) => {
       key: "Hành động",
       render: (text, record, index) => {
         return (
-          <Row justify={"space-between"} gutter={[0, 0]}>
-            <Col span={10}>
-              <Button type="primary" onClick={() => productDetail(record._id)}>
-                Xem chi tiết
-              </Button>
+          <Row justify={"center"} gutter={[10, 0]}>
+            <Col>
+              <Dropdown
+                menu={{
+                  items: [
+                    {
+                      label: "Xem chi tiết",
+                    },
+                  ],
+                }}
+              >
+                <Button
+                  type="primary"
+                  onClick={() => productDetail(record._id)}
+                >
+                  <BiSolidDetail />
+                </Button>
+              </Dropdown>
             </Col>
-            <Col span={10}>
-              <Button onClick={() => publishProduct(record)}>
-                {record.isPublished ? <p>Ẩn</p> : <p>Hiển thị</p>}
-              </Button>
+            <Col>
+              <Dropdown
+                menu={{
+                  items: [
+                    {
+                      label: record.isPublished
+                        ? "Ẩn sản phẩm"
+                        : "Hiện sản phẩm",
+                      key: 0,
+                    },
+                  ],
+                }}
+              >
+                <Button onClick={() => publishProduct(record)}>
+                  {record.isPublished ? (
+                    <p>
+                      <BiSolidHide />
+                    </p>
+                  ) : (
+                    <p>
+                      <BiShow />
+                    </p>
+                  )}
+                </Button>
+              </Dropdown>
             </Col>
           </Row>
         );
@@ -108,7 +157,6 @@ const TableProduct = ({ productData, categoryData }) => {
         columns={columns}
         scroll={{ x: 1000 }}
       />
-      <ModalAddProduct categoryData={categoryData} />
     </div>
   );
 };

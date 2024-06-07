@@ -15,8 +15,8 @@ import {
 } from "recharts";
 import { URL } from "@/api/url";
 
-const OverView = ({ overViewData, analysisData }) => {
-  if (!overViewData || !analysisData) {
+const OverView = ({ profile, overViewData, analysisData }) => {
+  if (!overViewData || !analysisData || !profile) {
     return "Hãy cập nhật thông tin cá nhân trước";
   }
   const columns = [
@@ -72,7 +72,6 @@ const OverView = ({ overViewData, analysisData }) => {
       },
     },
   ];
-  console.log(overViewData);
   return (
     <div>
       <Row gutter={[10, 10]}>

@@ -1,9 +1,10 @@
 "use server";
-import { GET, POST, PUT } from "./customFetch";
+import { GET, POST, PUT, getCookie } from "./customFetch";
 import { revalidatePath } from "next/cache";
+import { API } from "./url";
+import { cookies } from "next/headers";
 
 export const getALlProductByStatus = async (status) => {
-  console.log(`/product/getAllProductByShop/${status}`);
   try {
     const response = await GET(`/product/getAllProductByShop/${status}`);
     return response.message;
@@ -11,12 +12,23 @@ export const getALlProductByStatus = async (status) => {
     return;
   }
 };
-export const createProduct = async (formData) => {
+export const createProduct = async (formData, pathName) => {
   try {
-    const response = await POST(`/product/createProduct`, formData);
+    const userID = cookies().get("userID")?.value;
+    const token = cookies().get("token")?.value;
+    const response = await fetch(`${API}/product/createProduct`, {
+      method: "POST",
+      headers: {
+        "x-xclient-id": userID,
+        authorization: token,
+      },
+      body: formData,
+    });
+
+    revalidatePath(pathName);
     return response;
   } catch (error) {
-    return;
+    console.log(error);
   }
 };
 export const getProduct = async (id) => {

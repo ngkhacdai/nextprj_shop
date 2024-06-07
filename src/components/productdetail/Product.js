@@ -9,7 +9,6 @@ const Product = ({ category, productDetail }) => {
   return (
     <div className="">
       <ProductForm categoryData={category} productDetail={productDetail} />
-      {/* <ProductImage productDetail={productDetail} /> */}
       <ProductReview productDetail={productDetail} />
     </div>
   );
