@@ -12,10 +12,8 @@ import {
 } from "antd";
 import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
-import { IoIosInformationCircle } from "react-icons/io";
 
 const ProductReview = ({ productDetail }) => {
-  console.log(productDetail);
   const columns = [
     {
       title: "Ảnh",
@@ -100,37 +98,35 @@ const ProductReview = ({ productDetail }) => {
 
 export default ProductReview;
 
-{
-  /* <List
-            pagination
-            dataSource={productDetail.reviews}
-            renderItem={(item, index) => (
-              <List.Item>
-                <List.Item.Meta
-                  avatar={
-                    <Avatar src={`${URL}/${item.user.information.avatar}`} />
-                  }
-                  title={
-                    <div className="flex items-center">
-                      <p className="mr-2">{item.user.information.fullName}</p>
-                      <Rate
-                        allowHalf
-                        disabled
-                        className="text-lg"
-                        defaultValue={item.rating}
-                      />
-                    </div>
-                  }
-                  description={
-                    <div>
-                      <p className="text-black">{item.comment}</p>
-                      <p className="text-right">
-                        {new Date(item.updatedAt).toLocaleDateString("en-GB")}
-                      </p>
-                    </div>
-                  }
-                />
-              </List.Item>
-            )}
-          /> */
-}
+//  <List
+//           pagination
+//           dataSource={productDetail.reviews}
+//           renderItem={(item, index) => (
+//             <List.Item>
+//               <List.Item.Meta
+//                 avatar={
+//                   <Avatar src={`${URL}/${item.user.information.avatar}`} />
+//                 }
+//                 title={
+//                   <div className="flex items-center">
+//                     <p className="mr-2">{item.user.information.fullName}</p>
+//                     <Rate
+//                       allowHalf
+//                       disabled
+//                       className="text-lg"
+//                       defaultValue={item.rating}
+//                     />
+//                   </div>
+//                 }
+//                 description={
+//                   <div>
+//                     <p className="text-black">{item.comment}</p>
+//                     <p className="text-right">
+//                       {new Date(item.updatedAt).toLocaleDateString("en-GB")}
+//                     </p>
+//                   </div>
+//                 }
+//               />
+//             </List.Item>
+//           )}
+//         />
