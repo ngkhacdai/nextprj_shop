@@ -81,6 +81,19 @@ const TableOrder = ({ orderData }) => {
       },
     },
     {
+      title: "Tiền ship",
+      render: (record) => {
+        return (
+          <span>
+            {record.order_checkout.feeShip.toLocaleString("en-US", {
+              style: "currency",
+              currency: "VND",
+            })}
+          </span>
+        );
+      },
+    },
+    {
       title: "Tổng tiền",
       key: "total",
       render: (record) => {

@@ -31,7 +31,6 @@ const UpdateProfile = () => {
           formData
         )
         .then((res) => {
-          console.log("cập nhật thành công");
           router.push("/login");
         })
         .catch(() => {

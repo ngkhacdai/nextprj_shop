@@ -63,10 +63,10 @@ const SidebarClient = ({ children }) => {
         trigger={null}
         collapsible
         collapsed={collapsed}
-        collapsedWidth={0}
+        // collapsedWidth={0}
       >
         <div className="demo-logo-vertical">
-          <img alt="" src={logo.src} className="w-full h-40" />
+          <img alt="" src={logo.src} />
         </div>
         <Menu
           mode="inline"

@@ -197,176 +197,184 @@ const ProductForm = ({ categoryData, productDetail }) => {
   return (
     <div>
       {contextHolder}
-      <div className="py-2">Chỉnh sửa thông tin sản phẩm</div>
-      <Switch
-        checkedChildren={<CheckOutlined />}
-        unCheckedChildren={<CloseOutlined />}
-        onChange={() => setComponentDisabled(!componentDisabled)}
-      />
-      <div className="w-full container text-center mx-auto">
-        <Form
-          disabled={componentDisabled}
-          name="basic"
-          layout="vertical"
-          className="w-full flex flex-col justify-center items-center"
-          initialValues={{
-            nameProduct: productDetail.product_name,
-            productPrice: productDetail.product_price,
-            description: productDetail.product_description,
-          }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Form.Item
-            className="w-full"
-            name="imgageProduct"
-            label="Ảnh sản phẩm"
+      <div className="py-2 font-semibold text-lg">Chi tiết sản phẩm</div>
+      <div className="md:w-5/6 mx-auto">
+        <div className="text-center">
+          <p>Sửa sản phẩm</p>
+          <Switch
+            checkedChildren={<CheckOutlined />}
+            unCheckedChildren={<CloseOutlined />}
+            onChange={() => setComponentDisabled(!componentDisabled)}
+          />
+        </div>
+        <div className="w-full text-center mx-auto">
+          <Form
+            disabled={componentDisabled}
+            name="basic"
+            layout="vertical"
+            className="w-full flex flex-col justify-center items-center"
+            initialValues={{
+              nameProduct: productDetail.product_name,
+              productPrice: productDetail.product_price,
+              description: productDetail.product_description,
+            }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
           >
-            <div>
-              <Upload
-                beforeUpload={() => false}
-                listType="picture-card"
-                fileList={fileList}
-                onPreview={handlePreview}
-                onChange={handleChange}
-              >
-                {fileList.length >= 8 ? null : uploadButton}
-              </Upload>
-              {previewImage && (
-                <Image
-                  alt=""
-                  wrapperStyle={{
-                    display: "none",
-                  }}
-                  preview={{
-                    visible: previewOpen,
-                    onVisibleChange: (visible) => setPreviewOpen(visible),
-                    afterOpenChange: (visible) =>
-                      !visible && setPreviewImage(""),
-                  }}
-                  src={previewImage}
-                />
-              )}
-            </div>
-          </Form.Item>
-          <Form.Item
-            className="w-full"
-            label="Tên sản phẩm"
-            name="nameProduct"
-            rules={[
-              {
-                required: true,
-                message: "Hãy nhập tên sản phẩm",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            className="w-full"
-            label="Giá sản phẩm"
-            name="productPrice"
-            rules={[
-              {
-                required: true,
-                message: "Hãy nhập giá sản phẩm",
-              },
-            ]}
-          >
-            <Input type="Number" />
-          </Form.Item>
-          <Form.Item className="w-full" label="Loại sản phẩm">
-            <Select
-              style={{
-                width: "100%",
-              }}
-              onChange={(value) => setCategory(value)}
-              defaultValue={category}
-              options={categoryOptions}
-            />
-          </Form.Item>
-          <Form.Item className="w-full" label="Mô tả" name="description">
-            <Input.TextArea />
-          </Form.Item>
-          <Form.Item className="w-full" label="Thuộc tính sản phẩm">
-            <Row justify={"space-between"}>
-              <Col span={7}>
-                <p>Màu sắc</p>
-              </Col>
-              <Col span={7}>
-                <p>Kích cỡ</p>
-              </Col>
-              <Col span={7}>
-                <p>Số lượng</p>
-              </Col>
-            </Row>
-            {attribute.map((item, index) => {
-              return (
-                <Row
-                  className="py-2"
-                  key={`att-${index}`}
-                  justify={"space-between"}
+            <Form.Item
+              className="w-full"
+              name="imgageProduct"
+              label="Ảnh sản phẩm"
+            >
+              <div>
+                <Upload
+                  beforeUpload={() => false}
+                  listType="picture-card"
+                  fileList={fileList}
+                  onPreview={handlePreview}
+                  onChange={handleChange}
                 >
-                  <Col span={7}>
-                    <Select
-                      mode="tags"
-                      style={{
-                        width: "100%",
-                      }}
-                      value={item.color}
-                      onChange={(e) => handleSelectAttribute(e, index)}
-                      tokenSeparators={[","]}
-                      options={optionsColor}
-                    />
-                  </Col>
-                  <Col span={7}>
-                    {attribute[index].color &&
-                      attribute[index].options.map((item, optionIndex) => {
-                        return (
-                          <Select
-                            key={`options-${optionIndex}`}
-                            mode="tags"
-                            style={{
-                              width: "100%",
-                            }}
+                  {fileList.length >= 8 ? null : uploadButton}
+                </Upload>
+                {previewImage && (
+                  <Image
+                    alt=""
+                    wrapperStyle={{
+                      display: "none",
+                    }}
+                    preview={{
+                      visible: previewOpen,
+                      onVisibleChange: (visible) => setPreviewOpen(visible),
+                      afterOpenChange: (visible) =>
+                        !visible && setPreviewImage(""),
+                    }}
+                    src={previewImage}
+                  />
+                )}
+              </div>
+            </Form.Item>
+            <Form.Item
+              className="w-full"
+              label="Tên sản phẩm"
+              name="nameProduct"
+              rules={[
+                {
+                  required: true,
+                  message: "Hãy nhập tên sản phẩm",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              className="w-full"
+              label="Giá sản phẩm"
+              name="productPrice"
+              rules={[
+                {
+                  required: true,
+                  message: "Hãy nhập giá sản phẩm",
+                },
+              ]}
+            >
+              <Input type="Number" />
+            </Form.Item>
+            <Form.Item className="w-full" label="Loại sản phẩm">
+              <Select
+                style={{
+                  width: "100%",
+                }}
+                onChange={(value) => setCategory(value)}
+                defaultValue={category}
+                options={categoryOptions}
+              />
+            </Form.Item>
+            <Form.Item className="w-full" label="Mô tả" name="description">
+              <Input.TextArea />
+            </Form.Item>
+            <Form.Item className="w-full" label="Thuộc tính sản phẩm">
+              <Row justify={"space-between"}>
+                <Col span={7}>
+                  <p>Màu sắc</p>
+                </Col>
+                <Col span={7}>
+                  <p>Kích cỡ</p>
+                </Col>
+                <Col span={7}>
+                  <p>Số lượng</p>
+                </Col>
+              </Row>
+              {attribute.map((item, index) => {
+                return (
+                  <Row
+                    className="py-2"
+                    key={`att-${index}`}
+                    justify={"space-between"}
+                  >
+                    <Col span={7}>
+                      <Select
+                        mode="tags"
+                        style={{
+                          width: "100%",
+                        }}
+                        value={item.color}
+                        onChange={(e) => handleSelectAttribute(e, index)}
+                        tokenSeparators={[","]}
+                        options={optionsColor}
+                      />
+                    </Col>
+                    <Col span={7}>
+                      {attribute[index].color &&
+                        attribute[index].options.map((item, optionIndex) => {
+                          return (
+                            <Select
+                              key={`options-${optionIndex}`}
+                              mode="tags"
+                              style={{
+                                width: "100%",
+                              }}
+                              className="pb-2"
+                              value={item.size}
+                              onChange={(e) =>
+                                handleSelectOptions(e, index, optionIndex)
+                              }
+                              tokenSeparators={[","]}
+                              options={optionSize}
+                            />
+                          );
+                        })}
+                    </Col>
+                    <Col span={7}>
+                      {attribute[index].options[0].size &&
+                        attribute[index].options.map((item, optionIndex) => (
+                          <div
                             className="pb-2"
-                            value={item.size}
-                            onChange={(e) =>
-                              handleSelectOptions(e, index, optionIndex)
-                            }
-                            tokenSeparators={[","]}
-                            options={optionSize}
-                          />
-                        );
-                      })}
-                  </Col>
-                  <Col span={7}>
-                    {attribute[index].options[0].size &&
-                      attribute[index].options.map((item, optionIndex) => (
-                        <div className="pb-2" key={`optionquan-${optionIndex}`}>
-                          <Input
-                            onChange={(e) =>
-                              onChangeQuantity(
-                                e.target.value,
-                                index,
-                                optionIndex
-                              )
-                            }
-                            type="number"
-                            value={item.options_quantity}
-                          />
-                        </div>
-                      ))}
-                  </Col>
-                </Row>
-              );
-            })}
-          </Form.Item>
-          <Button type="primary" htmlType="submit">
-            Lưu
-          </Button>
-        </Form>
+                            key={`optionquan-${optionIndex}`}
+                          >
+                            <Input
+                              onChange={(e) =>
+                                onChangeQuantity(
+                                  e.target.value,
+                                  index,
+                                  optionIndex
+                                )
+                              }
+                              type="number"
+                              value={item.options_quantity}
+                            />
+                          </div>
+                        ))}
+                    </Col>
+                  </Row>
+                );
+              })}
+            </Form.Item>
+            <Button type="primary" htmlType="submit">
+              Lưu
+            </Button>
+          </Form>
+        </div>
       </div>
     </div>
   );

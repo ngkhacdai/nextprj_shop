@@ -36,8 +36,10 @@ const LoginForm = () => {
     <div className="">
       {contextHolder}
 
-      <div className="w-full flex flex-col items-center justify-center max-w-md">
-        <img src={logo.src} alt="Logo" className="w-24 h-24" />
+      <div className="w-full">
+        <div>
+          <img src={logo.src} alt="Logo" className="mx-auto w-24 h-24" />
+        </div>
 
         <p className="mb-2 text-2xl font-bold">Đăng nhập</p>
         <Form

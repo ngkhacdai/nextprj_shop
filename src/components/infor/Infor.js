@@ -4,7 +4,6 @@ import { getShopInfor } from "@/api/Shop";
 
 const Infor = async () => {
   const shopInfor = await getShopInfor();
-  console.log(shopInfor);
   return (
     <div>
       <FormInfor shopInfor={shopInfor} />

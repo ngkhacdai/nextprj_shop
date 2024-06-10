@@ -18,7 +18,7 @@ const FooterLogin = () => {
   return (
     <div className="w-5/6 h-4/5 border-inherit rounded-lg bg-white shadow-lg border-2 p-2">
       <Radio.Group
-        className="xs:hidden block mb-4"
+        className="md:hidden block mb-4"
         onChange={changeForm}
         defaultValue={animation ? "register" : "login"}
       >
@@ -27,13 +27,13 @@ const FooterLogin = () => {
       </Radio.Group>
       <div className="h-full w-full flex justify-center">
         <div
-          className={`w-full h-full flex flex-col xs:border-inherit xs:border-r-2 items-center justify-center relative ${
-            animation ? " xs:flex hidden bg-white " : ""
+          className={`w-full h-full flex flex-col md:border-inherit md:border-r-2 items-center justify-center relative ${
+            animation ? " md:flex hidden bg-white " : ""
           }`}
         >
           <div
             className={`absolute top-1/2 hidden transition ${
-              !animation ? "xs:hidden" : "xs:block animate-popUp"
+              !animation ? "md:hidden" : "md:block animate-popUp"
             }`}
           >
             <div className="flex flex-col justify-center items-center">
@@ -49,9 +49,9 @@ const FooterLogin = () => {
             </div>
           </div>
           <div
-            className={`xs:w-1/2 w-full ${
+            className={`md:w-1/2 w-full ${
               animation
-                ? "animate-changeFormRegister xs:block hidden"
+                ? "animate-changeFormRegister md:block hidden"
                 : "animate-changeFormLogin1"
             }`}
           >
@@ -59,13 +59,13 @@ const FooterLogin = () => {
           </div>
         </div>
         <div
-          className={`w-full h-full flex flex-col xs:border-inherit xs:border-l-2 items-center justify-center relative ${
-            !animation ? " xs:flex hidden bg-white" : ""
+          className={`w-full h-full flex flex-col md:border-inherit md:border-l-2 items-center justify-center relative ${
+            !animation ? " md:flex hidden bg-white" : ""
           }`}
         >
           <div
             className={`hidden absolute top-1/2 ${
-              animation ? "xs:hidden" : "xs:block animate-popUp"
+              animation ? "md:hidden" : "md:block animate-popUp"
             }`}
           >
             <div className="flex flex-col justify-center items-center">
@@ -81,9 +81,9 @@ const FooterLogin = () => {
             </div>
           </div>
           <div
-            className={`xs:w-1/2 w-full ${
+            className={`md:w-1/2 w-full ${
               !animation
-                ? "animate-changeFormRegister1 xs:block hidden"
+                ? "animate-changeFormRegister1 md:block hidden"
                 : "animate-changeFormLogin"
             }`}
           >

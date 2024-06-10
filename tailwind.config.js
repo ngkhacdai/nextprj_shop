@@ -17,6 +17,7 @@ module.exports = {
     },
     screens: {
       xs: "576px",
+      md: "768px",
     },
     animation: {
       changeFormRegister: "changeFormRegister 1s forwards",

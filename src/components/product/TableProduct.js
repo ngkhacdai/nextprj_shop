@@ -8,7 +8,6 @@ import { FaStar } from "react-icons/fa";
 import { BiShow, BiSolidDetail, BiSolidHide } from "react-icons/bi";
 
 const TableProduct = ({ productData, categoryData }) => {
-  console.log(productData);
   const router = useRouter();
   const columns = [
     {

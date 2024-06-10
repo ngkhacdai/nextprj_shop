@@ -2,8 +2,7 @@
 import { Card, Col, Row, Table, Tag, Tooltip } from "antd";
 import React from "react";
 import { FaMoneyBillWave } from "react-icons/fa";
-import { SlUserFollow } from "react-icons/sl";
-import { RiBillFill } from "react-icons/ri";
+import { RiBillFill, RiUserFollowFill } from "react-icons/ri";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import {
   Bar,
@@ -22,6 +21,7 @@ const OverView = ({ profile, overViewData, analysisData }) => {
   const columns = [
     {
       title: "Ảnh",
+      key: "image",
       render: (record) => {
         return (
           <img
@@ -34,10 +34,12 @@ const OverView = ({ profile, overViewData, analysisData }) => {
     },
     {
       title: "Tên sản phẩm",
+      key: "product_name",
       dataIndex: "product_name",
     },
     {
       title: "Giá",
+      key: "price",
       render: (record) => {
         return (
           <p>
@@ -51,14 +53,17 @@ const OverView = ({ profile, overViewData, analysisData }) => {
     },
     {
       title: "Tồn kho",
+      key: "product_quantity",
       dataIndex: "product_quantity",
     },
     {
       title: "Số lượng đã bán",
+      key: "product_sold",
       dataIndex: "product_sold",
     },
     {
       title: "Trạng thái",
+      key: "status",
       render: (text, record, index) => {
         return (
           <div>
@@ -74,11 +79,12 @@ const OverView = ({ profile, overViewData, analysisData }) => {
   ];
   return (
     <div>
+      <p className="pb-2 text-xl">Thống kê</p>
       <Row gutter={[10, 10]}>
         <Col xs={24} sm={12} md={12} lg={6} xl={6} className="max-h-56 w-full">
           <Card className="h-full flex flex-col items-center justify-center text-center p-4 hover:drop-shadow-xl">
             <p className="flex justify-center">
-              <FaMoneyBillWave />
+              <FaMoneyBillWave className="text-xl" />
             </p>
             <h1 className="text-3xl font-bold">
               {(overViewData?.totalCheckout).toLocaleString("en-US", {
@@ -92,7 +98,7 @@ const OverView = ({ profile, overViewData, analysisData }) => {
         <Col xs={24} sm={12} md={12} lg={6} xl={6} className="max-h-56 w-full">
           <Card className="h-full flex flex-col items-center justify-center text-center p-4 hover:drop-shadow-xl">
             <p className="flex justify-center">
-              <SlUserFollow />
+              <RiUserFollowFill className="text-xl" />
             </p>
             <h1 className="text-3xl font-bold">{overViewData?.totalFollow}</h1>
             <p className="text-slate-400 text-lg">Theo dõi</p>
@@ -101,7 +107,7 @@ const OverView = ({ profile, overViewData, analysisData }) => {
         <Col xs={24} sm={12} md={12} lg={6} xl={6} className="max-h-56 w-full">
           <Card className="h-full flex flex-col items-center justify-center text-center p-4 hover:drop-shadow-xl">
             <p className="flex justify-center">
-              <RiBillFill />
+              <RiBillFill className="text-xl" />
             </p>
             <h1 className="text-3xl font-bold">{overViewData?.totalOrders}</h1>
             <p className="text-slate-400 text-lg">Đơn hàng</p>
@@ -110,7 +116,7 @@ const OverView = ({ profile, overViewData, analysisData }) => {
         <Col xs={24} sm={12} md={12} lg={6} xl={6} className="max-h-56 w-full">
           <Card className="h-full flex flex-col items-center justify-center text-center p-4 hover:drop-shadow-xl">
             <p className="flex justify-center">
-              <MdOutlineProductionQuantityLimits />
+              <MdOutlineProductionQuantityLimits className="text-xl" />
             </p>
             <h1 className="text-3xl font-bold">{overViewData?.totalProduct}</h1>
             <p className="text-slate-400 text-lg">Tổng sản phẩm</p>
