@@ -4,7 +4,7 @@ import { SiStatista } from "react-icons/si";
 import logo from "@/assets/trustybuy.png";
 import { Button, Col, Layout, Menu, Row, theme } from "antd";
 import { useState } from "react";
-import { IoIosLogOut, IoIosNotifications } from "react-icons/io";
+import { IoIosLogOut, IoIosNotifications, IoMdChatboxes } from "react-icons/io";
 import { usePathname, useRouter } from "next/navigation";
 import { signout } from "@/api/Access";
 import { AiOutlineProduct } from "react-icons/ai";
@@ -53,6 +53,11 @@ const SidebarClient = ({ children }) => {
       key: "/infor",
       icon: <CgProfile />,
       label: "Thông tin shop",
+    },
+    {
+      key: "/chat",
+      icon: <IoMdChatboxes />,
+      label: "Tin nhắn",
     },
   ];
 
