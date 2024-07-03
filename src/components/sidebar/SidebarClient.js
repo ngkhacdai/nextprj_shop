@@ -26,6 +26,7 @@ const SidebarClient = ({ children }) => {
 
   const logoutHandler = async () => {
     await signout();
+    router.push("/login");
   };
 
   const handleMenuClick = (e) => {

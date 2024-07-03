@@ -132,41 +132,36 @@ const ModalAddProduct = ({ profile, categoryData }) => {
     formData.append("category", category);
     formData.append("product_attributes", JSON.stringify(newAtt));
     try {
-      const productData = await createProduct(formData, pathName);
+      await createProduct(formData, pathName);
       openNotificationWithIcon("Sản phẩm đã được thêm thành công", "success");
       clearForm();
       setIsModalOpen(false);
     } catch (error) {
+      console.log(error);
       openNotificationWithIcon("Failed to create product");
     }
   };
 
   const checkAttributes = () => {
     let check = true;
-    for (let index = 0; index < attribute.length - 1; index++) {
-      for (
-        let indexOption = 0;
-        indexOption < attribute[index].options.length - 1;
-        indexOption++
-      ) {
-        if (attribute[index].options[0].size == null) {
+    attribute.some((item) => {
+      return item.options.some((option) => {
+        if (option.size === null) {
           openNotificationWithIcon("Hãy chọn size");
-          return (check = false);
-        }
-        if (
-          attribute[index].options[indexOption].options_quantity <= 0 ||
-          attribute[index].options[indexOption].options_quantity == null
-        ) {
+          check = false;
+          return true; // This stops the inner some loop
+        } else if (option.options_quantity === 0 || !option.options_quantity) {
           openNotificationWithIcon("Số lượng phải lớn hơn 0");
-          return (check = false);
+          check = false;
+          return true; // This stops the inner some loop
         }
-      }
-    }
+        return false; // Continue the loop
+      }) && !check; // If check is false, this stops the outer some loop
+    });
     return check;
   };
 
   const handleCancel = () => {
-    clearForm();
     setIsModalOpen(false);
   };
 
@@ -255,6 +250,7 @@ const ModalAddProduct = ({ profile, categoryData }) => {
         className="w-[58rem]"
         title="Thêm sản phẩm"
         open={isModalOpen}
+        onCancel={handleCancel}
         footer={
           <div>
             <Button onClick={handleCancel}>Đóng</Button>
