@@ -14,9 +14,10 @@ export const getALlProductByStatus = async (status) => {
 };
 export const createProduct = async (formData, pathName) => {
   try {
+    console.log(formData);
     const userID = cookies().get("userID")?.value;
     const token = cookies().get("token")?.value;
-    const response = await fetch(`${API}/product/createProduct`, {
+    await fetch(`${API}/product/createProduct`, {
       method: "POST",
       headers: {
         "x-xclient-id": userID,
@@ -26,7 +27,7 @@ export const createProduct = async (formData, pathName) => {
     });
 
     revalidatePath(pathName);
-    return response;
+    return true;
   } catch (error) {
     console.log(error);
   }
