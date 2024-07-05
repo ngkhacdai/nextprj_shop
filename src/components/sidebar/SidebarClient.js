@@ -3,15 +3,21 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { SiStatista } from "react-icons/si";
 import logo from "@/assets/trustybuy.png";
 import { Badge, Button, Col, Dropdown, Layout, Menu, Row, theme } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoIosLogOut, IoIosNotifications, IoMdChatboxes } from "react-icons/io";
 import { usePathname, useRouter } from "next/navigation";
 import { signout } from "@/api/Access";
 import { AiOutlineProduct } from "react-icons/ai";
 import { RiBillFill } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
-import { socket } from "@/utils/socket";
+// import { socket } from "@/utils/socket";
 import { getCookie } from "@/api/customFetch";
+import { debounce } from "lodash";
+import { io } from "socket.io-client";
+
+export const socket = io("http://localhost:8080/", {
+  transports: ["websocket"],
+});
 
 const { Header, Sider, Content } = Layout;
 
@@ -21,6 +27,7 @@ const SidebarClient = ({ children, cookie }) => {
   const router = useRouter();
   const [notification, setNotification] = useState([]);
   console.log("notification", notification);
+  const socketInitialized = useRef(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -28,40 +35,53 @@ const SidebarClient = ({ children, cookie }) => {
   const pathname = usePathname();
 
   useEffect(() => {
+    if (!socketInitialized.current) {
+      connectSocket();
+    }
+  }, []);
+
+  const connectSocket = async () => {
+    socketInitialized.current = true;
     // Initialize socket connection
-    socket.connect();
+    if (!socket.connected) {
+      socket.connect();
+    } else {
+      // Emit event to join notification room
 
-    // Emit event to join notification room
-    socket.emit("getNotification", { userId: cookie.userID });
-
-    // Listen for notification events
-    socket.on("notification", (data) => {
-      setNotification(
-        data?.noti?.map((item, index) => {
-          return {
+      // Listen for notification events
+      socket.on("notification", (data) => {
+        setNotification((oldNotification) => [
+          ...oldNotification,
+          ...(data?.noti?.map((item, index) => ({
             key: `notification-${index}`,
             label: (
               <div
-                className={`w-72 ${item.isRead === false && "bg-green-200"}`}
+                className={`w-72 ${
+                  item.isRead === false ? "bg-green-200" : ""
+                }`}
               >
                 <p>{item.title}</p>
                 <p>{item.content}</p>
               </div>
             ),
-          };
-        })
-      );
-    });
-    socket.emit("notification", (data) => {
-      setNotification(data?.noti);
-    });
+          })) || []),
+        ]);
+      });
+    }
 
     // Cleanup on component unmount
     return () => {
       socket.off("notification");
       socket.disconnect();
+      // socketInitialized.current = false;
     };
-  }, []);
+  };
+
+  const emitGetNotification = debounce(() => {
+    socket.emit("getNotification", { userId: cookie.userID });
+  }, 1000);
+
+  // Emit event to join notification room
 
   const logoutHandler = async () => {
     await signout();
@@ -144,7 +164,7 @@ const SidebarClient = ({ children, cookie }) => {
             </Col>
             <Col span={12}>
               <Row className="items-center mr-2" justify={"end"}>
-                <Col className="items-center mr-2 flex">
+                <Col className="items-center mr-2 flex cursor-pointer">
                   <Badge count={notification?.length}>
                     <IoIosNotifications className="text-2xl" />
                   </Badge>
@@ -174,9 +194,12 @@ const SidebarClient = ({ children, cookie }) => {
                 }}
               />
             </Col>
+            <Col>
+              <Button onClick={emitGetNotification}>azzzzzzzzzzzzzz</Button>
+            </Col>
             <Col span={12}>
               <Row className="items-center mr-2" justify={"end"}>
-                <Col className="items-center mr-2 flex">
+                <Col className="items-center mr-2 flex cursor-pointer">
                   <Dropdown
                     overlayStyle={{
                       padding: 0,
