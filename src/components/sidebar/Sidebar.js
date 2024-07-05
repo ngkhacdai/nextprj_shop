@@ -8,7 +8,7 @@ const Sidebar = async ({ children }) => {
 
   return (
     <div>
-      <SidebarClient children={children} cookie={cookie} />
+      <SidebarClient cookie={cookie}>{children}</SidebarClient>
     </div>
   );
 };
