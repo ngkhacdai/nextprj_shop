@@ -10,14 +10,9 @@ import { signout } from "@/api/Access";
 import { AiOutlineProduct } from "react-icons/ai";
 import { RiBillFill } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
-// import { socket } from "@/utils/socket";
+import { socket } from "@/utils/socket";
 import { getCookie } from "@/api/customFetch";
 import { debounce } from "lodash";
-import { io } from "socket.io-client";
-
-export const socket = io("http://localhost:8080/", {
-  transports: ["websocket"],
-});
 
 const { Header, Sider, Content } = Layout;
 
@@ -36,6 +31,7 @@ const SidebarClient = ({ children, cookie }) => {
 
   useEffect(() => {
     if (!socketInitialized.current) {
+      console.log("zzzzzzzzzzzzzzzzzz");
       connectSocket();
     }
   }, []);

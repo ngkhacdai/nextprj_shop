@@ -4,7 +4,10 @@ import ChatForm from "./ChatForm";
 import ChatBox from "./ChatBox";
 import io from "socket.io-client";
 import { URL } from "@/api/url";
-import { socket } from "@/utils/socket";
+
+export const socket = io("http://localhost:8080/", {
+  transports: ["websocket"],
+});
 
 const Connect = ({ userId }) => {
   const [messageData, setMessageData] = useState([]);
@@ -12,7 +15,9 @@ const Connect = ({ userId }) => {
   const [listUser, setListUser] = useState([]);
   console.log(listUser);
   useEffect(() => {
-    socket.emit("getListUserbyShop", { userId });
+    socket.on("connect", () => {
+      socket.emit("getListUserbyShop", { userId });
+    });
 
     socket.on("listUserByShopResponse", (data) => {
       setListUser(data);
