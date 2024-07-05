@@ -4,10 +4,7 @@ import ChatForm from "./ChatForm";
 import ChatBox from "./ChatBox";
 import io from "socket.io-client";
 import { URL } from "@/api/url";
-
-const socket = io("https://nestprj.onrender.com/", {
-  transports: ["websocket"],
-});
+import { socket } from "@/utils/socket";
 
 const Connect = ({ userId }) => {
   const [messageData, setMessageData] = useState([]);
@@ -15,11 +12,8 @@ const Connect = ({ userId }) => {
   const [listUser, setListUser] = useState([]);
   console.log(listUser);
   useEffect(() => {
-    socket.connect();
+    socket.emit("getListUserbyShop", { userId });
 
-    socket.on("connect", () => {
-      socket.emit("getListUserbyShop", { userId });
-    });
     socket.on("listUserByShopResponse", (data) => {
       setListUser(data);
     });

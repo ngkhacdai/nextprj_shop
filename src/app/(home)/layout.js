@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import Loading from "../loading";
+import Sidebar from "@/components/sidebar/Sidebar";
 
 const SidebarClient = dynamic(
   () => import("@/components/sidebar/SidebarClient"),
@@ -9,8 +10,8 @@ const SidebarClient = dynamic(
 
 export default function Layout({ children }) {
   return (
-    <SidebarClient>
+    <Sidebar>
       <Suspense fallback={<Loading />}>{children}</Suspense>
-    </SidebarClient>
+    </Sidebar>
   );
 }

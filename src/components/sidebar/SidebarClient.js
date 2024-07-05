@@ -2,27 +2,66 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { SiStatista } from "react-icons/si";
 import logo from "@/assets/trustybuy.png";
-import { Button, Col, Layout, Menu, Row, theme } from "antd";
-import { useState } from "react";
+import { Badge, Button, Col, Dropdown, Layout, Menu, Row, theme } from "antd";
+import { useEffect, useState } from "react";
 import { IoIosLogOut, IoIosNotifications, IoMdChatboxes } from "react-icons/io";
 import { usePathname, useRouter } from "next/navigation";
 import { signout } from "@/api/Access";
 import { AiOutlineProduct } from "react-icons/ai";
 import { RiBillFill } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
+import { socket } from "@/utils/socket";
+import { getCookie } from "@/api/customFetch";
 
 const { Header, Sider, Content } = Layout;
 
-const SidebarClient = ({ children }) => {
+const SidebarClient = ({ children, cookie }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
   const router = useRouter();
-
+  const [notification, setNotification] = useState([]);
+  console.log("notification", notification);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   const pathname = usePathname();
+
+  useEffect(() => {
+    // Initialize socket connection
+    socket.connect();
+
+    // Emit event to join notification room
+    socket.emit("getNotification", { userId: cookie.userID });
+
+    // Listen for notification events
+    socket.on("notification", (data) => {
+      setNotification(
+        data?.noti?.map((item, index) => {
+          return {
+            key: `notification-${index}`,
+            label: (
+              <div
+                className={`w-72 ${item.isRead === false && "bg-green-200"}`}
+              >
+                <p>{item.title}</p>
+                <p>{item.content}</p>
+              </div>
+            ),
+          };
+        })
+      );
+    });
+    socket.emit("notification", (data) => {
+      setNotification(data?.noti);
+    });
+
+    // Cleanup on component unmount
+    return () => {
+      socket.off("notification");
+      socket.disconnect();
+    };
+  }, []);
 
   const logoutHandler = async () => {
     await signout();
@@ -65,11 +104,10 @@ const SidebarClient = ({ children }) => {
   return (
     <Layout>
       <Sider
-        className="h-screen sticky top-0  hidden xs:block bg-white"
+        className="h-screen sticky top-0 hidden xs:block bg-white"
         trigger={null}
         collapsible
         collapsed={collapsed}
-        // collapsedWidth={0}
       >
         <div className="demo-logo-vertical">
           <img alt="" src={logo.src} />
@@ -106,8 +144,10 @@ const SidebarClient = ({ children }) => {
             </Col>
             <Col span={12}>
               <Row className="items-center mr-2" justify={"end"}>
-                <Col>
-                  <IoIosNotifications className="text-2xl" />
+                <Col className="items-center mr-2 flex">
+                  <Badge count={notification?.length}>
+                    <IoIosNotifications className="text-2xl" />
+                  </Badge>
                 </Col>
                 <Col className="items-center flex">
                   <IoIosLogOut
@@ -136,8 +176,17 @@ const SidebarClient = ({ children }) => {
             </Col>
             <Col span={12}>
               <Row className="items-center mr-2" justify={"end"}>
-                <Col>
-                  <IoIosNotifications className="text-2xl" />
+                <Col className="items-center mr-2 flex">
+                  <Dropdown
+                    overlayStyle={{
+                      padding: 0,
+                    }}
+                    menu={{ items: notification }}
+                  >
+                    <Badge count={notification?.length}>
+                      <IoIosNotifications className="text-2xl" />
+                    </Badge>
+                  </Dropdown>
                 </Col>
                 <Col className="items-center flex">
                   <IoIosLogOut
